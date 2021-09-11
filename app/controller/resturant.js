@@ -52,3 +52,17 @@ exports.bookTable = async (req, res) => {
         res.send(helper.handleError(err));
     }
 };
+
+
+
+exports.getAllTables = async (req, res) => {
+    const {status} = req.query;
+    try {
+        // fetch all the tables with particular status
+        let result  = await ResturantTable.find({ status: status });
+        res.send(helper.respondWithResult(200, { message: "List of all tables", result }));
+    } catch (err) {
+        res.send(helper.handleError(err));
+    }
+};
+

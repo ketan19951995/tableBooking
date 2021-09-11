@@ -7,5 +7,6 @@ const resturantController = require('../controller/resturant');
 router.post('/', resturantController.createResturant);
 router.post('/table', resturantController.createResturantTable);
 router.post('/booktable/', resturantController.bookTable);
+router.get('/table', resturantController.getAllTables);
 
 module.exports = router
