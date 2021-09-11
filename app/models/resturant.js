@@ -30,7 +30,30 @@ const resturantTablesSchema = new mongoose.Schema({
 
 const ResturantTable = mongoose.model("ResturantTable", resturantTablesSchema);
 
+
+
+const resturantTableBookSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId
+    },
+    resturantId: {
+        type: mongoose.Schema.Types.ObjectId
+    },
+    tableId: {
+        type: mongoose.Schema.Types.ObjectId
+    },
+    status: {
+        type: String,
+    }
+
+
+}, { versionKey: false })
+
+const ResturantTableBook = mongoose.model("ResturantTableBook", resturantTableBookSchema);
+
+
 module.exports = {
     Resturant,
-    ResturantTable
+    ResturantTable,
+    ResturantTableBook
 }

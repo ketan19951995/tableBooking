@@ -1,4 +1,4 @@
-const { Resturant, ResturantTable } = require('../models/resturant');
+const { Resturant, ResturantTable, ResturantTableBook } = require('../models/resturant');
 const helper = require('../common/helper')
 exports.createResturant = async (req, res) => {
     let { name, address, totalTablesCount } = req.body;
@@ -17,7 +17,7 @@ exports.createResturant = async (req, res) => {
 };
 
 exports.createResturantTable = async (req, res) => {
-    let { resturantId, status} = req.body;
+    let { resturantId, status } = req.body;
     let newResturantTable = {
         resturantId,
         status
@@ -33,6 +33,22 @@ exports.createResturantTable = async (req, res) => {
 
 
 
+exports.bookTable = async (req, res) => {
+    let { resturantId, tableId, status, userId } = req.body;
+    let newResturantTable = {
+        resturantId,
+        tableId,
+        status,
+        userId
+    }
+    let resturantTableBookRecord = new ResturantTableBook(newResturantTable)
+    try {
+        let result = await resturantTableBookRecord.save();
 
-
-
+        // update the record in table collection  ,set the status to either booked or reserved
+        await ResturantTable.findOneAndUpdate({ _id: tableId }, { status: status });
+        res.send(helper.respondWithResult(200, { message: "table booked  in resturant successfully", result }));
+    } catch (err) {
+        res.send(helper.handleError(err));
+    }
+};
